@@ -1,16 +1,20 @@
 import com.pwskills.utility.DBUtil;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
 public class TestInsertApp1 {
 
+    private static final String SQL_INSERT_QUERY = "INSERT INTO student (sid, sname, sage, saddress) VALUES (?, ?, ?, ?)";
+
+
     public static void main(String[] args) {
         //Resource used
         Connection connection = null;
-        Statement statement = null;
+        PreparedStatement preparedStatement = null;
         int rowCount = 0;
 
         try
@@ -18,11 +22,11 @@ public class TestInsertApp1 {
             connection = DBUtil.getDBConnection();
             
             if (connection != null){
-                statement = connection.createStatement();
+                 preparedStatement = connection.prepareStatement(SQL_INSERT_QUERY);
             }
             Scanner scanner = new Scanner(System.in);
-            String sqlInsertQuery = null;
-            if (scanner != null)
+
+            if (preparedStatement != null && scanner != null)
             {
                 System.out.println("Enter the sid: ");
                 int sid = scanner.nextInt();
@@ -36,28 +40,30 @@ public class TestInsertApp1 {
                 System.out.println("Enter the saddress: ");
                 String saddress = scanner.next();
 
-                sqlInsertQuery = "insert into student values(" + sid + ",\t '" + sname + "',\t " + sage + ",\t '" + saddress + "')";
-                System.out.println(sqlInsertQuery);
-            }
+                //set the values to the '?' placeholder ; formatting is not required
+                preparedStatement.setInt(1, sid);
+                preparedStatement.setString(2,sname);
+                preparedStatement.setInt(3,sage);
+                preparedStatement.setString(4,saddress);
 
-            if (statement != null && sqlInsertQuery != null)
-            {
-               rowCount =  statement.executeUpdate(sqlInsertQuery);
+                //Execute the query now with the inputs
+                rowCount = preparedStatement.executeUpdate();
             }
-            if (rowCount==0){
-                System.out.println("failure in insertion...");
+            if (rowCount == 0){
+                System.out.println("Insertion of records failed");
             }
             else {
-                System.out.println("record inserted succesfully...");
+                System.out.println("No of records inserted is: "+rowCount);
             }
+
+            scanner.close();
 
         } catch (IOException | SQLException e)
         {
             e.printStackTrace();
         }
         finally {
-            DBUtil.cleanUpResources(null,statement,connection);
+            DBUtil.cleanUpResources(null,preparedStatement,connection);
         }
-
     }
 }
