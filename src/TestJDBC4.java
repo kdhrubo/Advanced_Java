@@ -10,7 +10,7 @@ public class TestJDBC4 {
         ResultSet resultSet = null;
 
         try {
-            connection = DBUtil.getDBConnection();
+            connection = DBUtil.getDBConnection("pwskills_octbatch");
 
 
             //2. Create a Statement Object
@@ -38,12 +38,7 @@ public class TestJDBC4 {
         {
             e.printStackTrace();
         }
-        catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+
         catch (Exception e){
             e.printStackTrace();
         }

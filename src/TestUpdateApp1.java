@@ -15,7 +15,7 @@ public class TestUpdateApp1 {
 
         try
         {
-            connection = DBUtil.getDBConnection();
+            connection = DBUtil.getDBConnection("pwskills_octbatch");
 
             if (connection != null){
                 statement = connection.createStatement();
@@ -46,7 +46,7 @@ public class TestUpdateApp1 {
                 System.out.println("Record updated succesfully...");
             }
 
-        } catch (IOException | SQLException e)
+        } catch (SQLException | IOException e)
         {
             e.printStackTrace();
         }

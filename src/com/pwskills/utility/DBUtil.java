@@ -1,9 +1,12 @@
 package com.pwskills.utility;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public final class DBUtil {
@@ -32,15 +35,18 @@ public final class DBUtil {
             }
         }
     }
-    public static Connection getDBConnection() throws IOException, SQLException {
-        //1. Establishing the Connection
-        return DriverManager.getConnection(properties.getProperty("url"), properties.getProperty("user"), properties.getProperty("password"));
+
+    public static Connection getDBConnection(String dbName) throws IOException, SQLException {
+        // Establishing the Connection
+        return DriverManager.getConnection(properties.getProperty(dbName + ".url"),
+                properties.getProperty(dbName + ".user"),
+                properties.getProperty(dbName + ".password"));
     }
 
     public static void cleanUpResources (ResultSet resultSet, Statement statement, Connection connection){
-        //5. Close the resources
+        // Close the resources
 
-        //Closing ResultSet
+        // Closing ResultSet
         if (resultSet != null)
         {
             try
@@ -49,12 +55,11 @@ public final class DBUtil {
             }
             catch (SQLException e)
             {
-                //TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
 
-        //Closing Statement
+        // Closing Statement
         if (statement != null)
         {
             try
@@ -67,7 +72,7 @@ public final class DBUtil {
             }
         }
 
-        //Closing Connection
+        // Closing Connection
         if (connection != null)
         {
             try {

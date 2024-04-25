@@ -1,15 +1,21 @@
+package com.pwskills.tanay;
+
 import com.pwskills.utility.DBUtil;
+
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
-public class TestInsertApp1 {
+public class TestImageApp1 {
 
-    private static final String SQL_INSERT_QUERY = "INSERT INTO student (sid, sname, sage, saddress) VALUES (?, ?, ?, ?)";
-
+    private static final String SQL_INSERT_QUERY = "INSERT INTO person (name, photo) VALUES (?, ?)";
 
     public static void main(String[] args) {
         //Resource used
@@ -28,23 +34,15 @@ public class TestInsertApp1 {
 
             if (preparedStatement != null && scanner != null)
             {
-                System.out.println("Enter the sid: ");
-                int sid = scanner.nextInt();
 
-                System.out.println("Enter the sname: ");
-                String sname = scanner.next();
+                System.out.println("Enter the username: ");
+                String username = scanner.next();
 
-                System.out.println("Enter the sage: ");
-                int sage = scanner.nextInt();
-
-                System.out.println("Enter the saddress: ");
-                String saddress = scanner.next();
 
                 //set the values to the '?' placeholder ; formatting is not required
-                preparedStatement.setInt(1, sid);
-                preparedStatement.setString(2,sname);
-                preparedStatement.setInt(3,sage);
-                preparedStatement.setString(4,saddress);
+                preparedStatement.setString(1,username);
+                preparedStatement.setBinaryStream(2, new FileInputStream("/Users/tanayjoshi/Desktop/carbon-2.jpg"));
+
 
                 //Execute the query now with the inputs
                 rowCount = preparedStatement.executeUpdate();
@@ -58,7 +56,7 @@ public class TestInsertApp1 {
 
             scanner.close();
 
-        } catch (SQLException | IOException e)
+        } catch (IOException | SQLException e)
         {
             e.printStackTrace();
         }
@@ -66,4 +64,6 @@ public class TestInsertApp1 {
             DBUtil.cleanUpResources(null,preparedStatement,connection);
         }
     }
+
 }
+

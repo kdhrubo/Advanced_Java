@@ -14,9 +14,11 @@ public class StudentRepoImpl implements IStudentRepo {
 
     static {
         try {
-            connection = DBUtil.getDBConnection();
-        } catch (IOException | SQLException e) {
-            e.printStackTrace();
+            connection = DBUtil.getDBConnection("pwskills_octbatch");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

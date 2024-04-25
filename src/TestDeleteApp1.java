@@ -16,7 +16,7 @@ public class TestDeleteApp1 {
         int rowCount = 0;
 
         try {
-            connection = DBUtil.getDBConnection();
+            connection = DBUtil.getDBConnection("pwskills_octbatch");
 
             if (connection != null) {
                 preparedStatement = connection.prepareStatement(SQL_DELETE_QUERY);

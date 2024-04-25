@@ -1,14 +1,20 @@
+package com.pwskills.tanay;
+
 import com.pwskills.utility.DBUtil;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
-public class TestInsertApp1 {
+public class TestInsertApp2 {
 
-    private static final String SQL_INSERT_QUERY = "INSERT INTO student (sid, sname, sage, saddress) VALUES (?, ?, ?, ?)";
+    private static final String SQL_INSERT_QUERY = "INSERT INTO users (username, dob) VALUES (?, ?)";
+
 
 
     public static void main(String[] args) {
@@ -28,23 +34,16 @@ public class TestInsertApp1 {
 
             if (preparedStatement != null && scanner != null)
             {
-                System.out.println("Enter the sid: ");
-                int sid = scanner.nextInt();
 
-                System.out.println("Enter the sname: ");
-                String sname = scanner.next();
+                System.out.println("Enter the username: ");
+                String username = scanner.next();
 
-                System.out.println("Enter the sage: ");
-                int sage = scanner.nextInt();
-
-                System.out.println("Enter the saddress: ");
-                String saddress = scanner.next();
+                System.out.println("Enter the DOB(dd-MM-yyyy): ");
+                String dob = scanner.next();
 
                 //set the values to the '?' placeholder ; formatting is not required
-                preparedStatement.setInt(1, sid);
-                preparedStatement.setString(2,sname);
-                preparedStatement.setInt(3,sage);
-                preparedStatement.setString(4,saddress);
+                preparedStatement.setString(1,username);
+                preparedStatement.setDate(2, convertToSQLDate(dob));
 
                 //Execute the query now with the inputs
                 rowCount = preparedStatement.executeUpdate();
@@ -66,4 +65,18 @@ public class TestInsertApp1 {
             DBUtil.cleanUpResources(null,preparedStatement,connection);
         }
     }
+
+    private static Date convertToSQLDate(String dob) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            java.util.Date utilDate = sdf.parse(dob);
+            long inputMs = utilDate.getTime();
+            java.sql.Date sqlDate = new java.sql.Date(inputMs);
+            return sqlDate;
+        } catch (ParseException e) {
+            e.printStackTrace(); // Or handle the exception as needed
+            return null; // Or return some default value
+        }
+    }
+
 }

@@ -19,7 +19,7 @@ public class SelectAndNonSelectApp1 {
 
         try
         {
-            connection = DBUtil.getDBConnection();
+            connection = DBUtil.getDBConnection("pwskills_octbatch");
 
             if (connection != null){
                 statement = connection.createStatement();
@@ -56,7 +56,7 @@ public class SelectAndNonSelectApp1 {
                     System.out.println("Table got modified");
                 }
             }
-        } catch (IOException | SQLException e)
+        } catch (SQLException | IOException e)
         {
             e.printStackTrace();
         }
