@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import com.pwskills.utility.DBUtil;
+
 import org.apache.commons.io.IOUtils;
 
 public class TestImageApiApp1 {

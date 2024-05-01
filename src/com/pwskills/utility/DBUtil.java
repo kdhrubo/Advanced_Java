@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.Properties;
 
 public final class DBUtil {
+    public static Connection getDBConnection;
     private static Properties properties = null;
     private DBUtil(){}
 
