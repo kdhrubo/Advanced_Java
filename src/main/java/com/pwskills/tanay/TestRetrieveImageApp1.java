@@ -1,4 +1,4 @@
-package com.pwskills.tanay;
+package main.java.com.pwskills.tanay;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;

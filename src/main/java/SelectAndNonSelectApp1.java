@@ -1,3 +1,5 @@
+package com.pwskills.tanay;
+
 import com.pwskills.utility.DBUtil;
 import java.io.IOException;
 import java.sql.Connection;
