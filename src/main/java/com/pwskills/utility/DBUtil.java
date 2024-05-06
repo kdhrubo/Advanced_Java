@@ -1,4 +1,4 @@
-package main.java.com.pwskills.utility;
+package com.pwskills.utility;
 
 import java.io.FileInputStream;
 import java.io.IOException;
